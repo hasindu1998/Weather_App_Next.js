@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import SearchBar from "../components/SeachBar";
 import { fetchWeatherData } from "../service/api";
 import WeatherCalendar from "../components/WeatherCalendar";
+import Image from "next/image";
 
 interface WeatherDay {
   date: string;
@@ -17,23 +18,25 @@ const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [selectedDay, setSelectedDay] = useState<WeatherDay | null>(null);
 
+  
+  const handleSearch = useCallback(async () => {
+  if (!destination) return;
+  setLoading(true);
+  try {
+    const weatherInfo = await fetchWeatherData(destination);
+    setWeatherData(weatherInfo);
+    setSelectedDay(null);
+  } catch (error) {
+    console.error("Failed to fetch weather data:", error);
+  } finally {
+    setLoading(false);
+  }
+}, [destination]);
+
   useEffect(() => {
     handleSearch();
-  }, []);
+  }, [handleSearch]);
 
-  const handleSearch = async () => {
-    if (!destination) return;
-    setLoading(true);
-    try {
-      const weatherInfo = await fetchWeatherData(destination);
-      setWeatherData(weatherInfo);
-      setSelectedDay(null);
-    } catch (error) {
-      console.error("Failed to fetch weather data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-yellow-50 p-6">
@@ -87,7 +90,7 @@ const WeatherApp = () => {
                   <h2 className="text-3xl font-bold text-gray-800 mb-6">Weather Details</h2>
                   <div className="bg-gradient-to-br from-sky-50 to-yellow-50 rounded-2xl p-8 mb-6 border border-sky-200">
                     <div className="text-lg text-sky-600 font-semibold mb-2">{selectedDay.date}</div>
-                    <img 
+                    <Image 
                       src={selectedDay.icon}
                       alt={selectedDay.text}
                       width={80}

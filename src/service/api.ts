@@ -7,6 +7,17 @@ interface WeatherDay {
   text: string;
 }
 
+interface ForecastDayRaw {
+  date: string;
+  day: {
+    avgtempC: number;
+    condition: {
+      icon: string;
+      text: string;
+    };
+  };
+}
+
 export const fetchWeatherData = async (city: string): Promise<WeatherDay[]> => {
   try {
     const response = await axios.get(
@@ -21,11 +32,11 @@ export const fetchWeatherData = async (city: string): Promise<WeatherDay[]> => {
       throw new Error("forecastday is not an array");
     }
 
-    return forecastDays.map((day: any) => ({
+    return forecastDays.map((day: ForecastDayRaw) => ({
       date: day.date,
-      icon: `https:${day.day?.condition?.icon}`,  // prepend https:
-      avg_temp: day.day?.avgtempC,
-      text: day.day?.condition?.text,
+      icon: `https:${day.day.condition.icon}`,
+      avg_temp: day.day.avgtempC,
+      text: day.day.condition.text,
     }));
   } catch (error) {
     console.error("Error fetching weather data:", error);
