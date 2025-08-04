@@ -49,6 +49,12 @@ const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
       },
     })
 
+    //Cleanup function to destroy datepicker instance 
+    return () => {
+      pickerInstance.current?.destroy();
+      pickerInstance.current = null;
+    }
+
   }, [weatherData, onDateSelect])
   
   return <input ref={datepickerRef} readOnly />
