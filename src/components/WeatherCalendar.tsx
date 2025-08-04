@@ -21,7 +21,8 @@ interface Props {
 const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
   const datepickerRef = useRef<HTMLInputElement>(null)
   const pickerInstance = useRef<AirDatepicker<HTMLInputElement> | null>(null)
-
+    
+  // Initialize datepicker when component mounts
   useEffect(() => {
     if (!datepickerRef.current) return
 
@@ -36,6 +37,7 @@ const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
       minDate: new Date(weatherData[0].date),
       maxDate: new Date(weatherData[weatherData.length-1].date),
 
+      //Handle date selection
       onSelect({ date }) {
         if (date instanceof Date) {
           const selectedDate = date.toISOString().split('T')[0]
@@ -48,7 +50,7 @@ const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
     })
 
   }, [weatherData, onDateSelect])
-
+  
   return <input ref={datepickerRef} readOnly />
 }
 

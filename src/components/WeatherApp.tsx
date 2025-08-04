@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SeachBar";
 import { fetchWeatherData } from "../service/api";
-import WeatherCalendar from "../components/WeatherCalender";
+import WeatherCalendar from "./WeatherCalendar";
 
 interface WeatherDay {
   date: string;
@@ -12,9 +12,9 @@ interface WeatherDay {
 }
 
 const WeatherApp = () => {
-  const [destination, setDestination] = useState("Colombo"); // default city
+  const [destination, setDestination] = useState("Colombo"); //Set the default city to Colombo
   const [loading, setLoading] = useState(false);
-  const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
+  const [weatherData, setWeatherData] = useState<WeatherDay[]>([]); 
   const [selectedDay, setSelectedDay] = useState<WeatherDay | null>(null);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const WeatherApp = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Weather Details with the Calendar */}
         {weatherData.length > 0 && (
           <div>
             {/* Calendar */}
