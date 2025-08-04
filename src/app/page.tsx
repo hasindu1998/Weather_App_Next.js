@@ -1,8 +1,5 @@
-import Image from "next/image";
-import WeatherApp from "./components/WeatherApp";
+import WeatherApp from "../components/WeatherApp";
 
 export default function Home() {
-  return (
-    <WeatherApp />
-  );
+  return <WeatherApp />;
 }
