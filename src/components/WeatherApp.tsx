@@ -78,7 +78,7 @@ const WeatherApp = () => {
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-sky-700 mb-2">Weather Calendar</h3>
                 <div className="w-20 h-1 bg-gradient-to-r from-yellow-400 to-sky-400 rounded-full mx-auto mb-6"></div>
-                <div className="max-w-md mx-auto">
+                <div className="w-full h-full">
                   <WeatherCalendar weatherData={weatherData} onDateSelect={setSelectedDay} />
                 </div>
               </div>

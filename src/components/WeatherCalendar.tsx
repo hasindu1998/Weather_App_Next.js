@@ -1,63 +1,88 @@
-'use client'
+"use client";
 
-import React, { useEffect, useRef } from 'react'
-import AirDatepicker from 'air-datepicker'
-import 'air-datepicker/air-datepicker.css'
-import enLocale from 'air-datepicker/locale/en'
-
+import React, { useEffect, useRef } from "react";
+import AirDatepicker from "air-datepicker";
+import "air-datepicker/air-datepicker.css";
+import enLocale from "air-datepicker/locale/en";
 
 interface WeatherDay {
-  date: string
-  icon: string
-  avg_temp: number
-  text: string
+  date: string;
+  icon: string; // this comes directly from the API
+  avg_temp: number;
+  text: string;
 }
 
 interface Props {
-  weatherData: WeatherDay[]
-  onDateSelect: (day: WeatherDay | null) => void
+  weatherData: WeatherDay[];
+  onDateSelect: (day: WeatherDay | null) => void;
 }
 
 const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
-  const datepickerRef = useRef<HTMLInputElement>(null)
-  const pickerInstance = useRef<AirDatepicker<HTMLInputElement> | null>(null)
-    
-  // Initialize datepicker when component mounts
-  useEffect(() => {
-    if (!datepickerRef.current) return
+  const datepickerRef = useRef<HTMLInputElement>(null);
+  const pickerInstance = useRef<AirDatepicker<HTMLInputElement> | null>(null);
 
-    // Destroy old instance if exists
+  useEffect(() => {
+    if (!datepickerRef.current || weatherData.length === 0) return;
+
+    // Destroy existing picker
     pickerInstance.current?.destroy();
+
+    const first14Days = weatherData.slice(0, 14);
 
     pickerInstance.current = new AirDatepicker(datepickerRef.current, {
       locale: enLocale,
       inline: true,
-      
-      // Limit calendar dates to your weatherData range
-      minDate: new Date(weatherData[0].date),
-      maxDate: new Date(weatherData[weatherData.length-1].date),
+      minDate: new Date(first14Days[0].date),
+      maxDate: new Date(first14Days[first14Days.length - 1].date),
 
-      //Handle date selection
       onSelect({ date }) {
         if (date instanceof Date) {
-          const selectedDate = date.toISOString().split('T')[0]
-          const selectedDay = weatherData.find((day) => day.date === selectedDate)
-          onDateSelect(selectedDay || null)
+          const selectedDate = date.toISOString().split("T")[0];
+          const selectedDay = weatherData.find(
+            (day) => day.date === selectedDate
+          );
+          onDateSelect(selectedDay || null);
         } else {
-          onDateSelect(null)
+          onDateSelect(null);
         }
       },
-    })
 
-    //Cleanup function to destroy datepicker instance 
+      onRenderCell({ date, cellType }) {
+        if (cellType === "day") {
+          const dateString = date.toISOString().split("T")[0];
+          const dayData = first14Days.find((day) => day.date === dateString);
+          const isImage = dayData?.icon?.startsWith("http") ?? false;
+
+          return {
+            html: `
+        <div class="flex flex-col items-center text-center">
+          <div className="flex text-center">${date.getDate()}</div>
+          ${
+            dayData && dayData.icon
+              ? isImage
+                ? `<img src="${dayData.icon}" alt="icon" class="w-4 h-4 mt-0.5" />`
+                : `<span class="text-base mt-0.5">${dayData.icon}</span>`
+              : ""
+          }
+        </div>
+      `,
+          };
+        }
+
+        return undefined;
+      },
+    });
+
+    // Optional: auto-select the first day
+    pickerInstance.current.selectDate(new Date(first14Days[0].date));
+
     return () => {
       pickerInstance.current?.destroy();
       pickerInstance.current = null;
-    }
+    };
+  }, [weatherData, onDateSelect]);
 
-  }, [weatherData, onDateSelect])
-  
-  return <input ref={datepickerRef} readOnly />
-}
+  return <input ref={datepickerRef} readOnly style={{ width: "100%" }} />;
+};
 
-export default WeatherCalendar
+export default WeatherCalendar;
