@@ -19,7 +19,17 @@ A dynamic 14-day weather forecast web application built with **Next.js**, **Type
 - **Air Datepicker** – Lightweight, customizable date picker
 - **Axios** – For fetching weather data from API
 
-## Getting Started
+## 🚀 Getting Started
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+\`\`\`bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+\`\`\`
+
 
 First, run the development server:
 
