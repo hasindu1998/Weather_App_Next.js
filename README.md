@@ -21,8 +21,6 @@ A dynamic 14-day weather forecast web application built with **Next.js**, **Type
 
 ## 🚀 Getting Started
 
-## 🚀 Getting Started
-
 ### 1. Clone the repository
 
 \`\`\`bash
