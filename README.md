@@ -1,4 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌤️ 14-Day Weather Forecast App
+
+A dynamic 14-day weather forecast web application built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Air Datepicker**. Easily search by destination and interact with a calendar to view daily weather icons and details.
+
+## 🔍 Features
+
+- 🔎 Search weather forecast by destination
+- 📅 Interactive calendar view using Air Datepicker
+- 🌤️ Display weather icons for each day
+- 🧭 Select any date to get detailed forecast info
+- ⚡ Fast, responsive, and optimized UI with Tailwind CSS
+- 🌐 Built using modern web technologies: Next.js & TypeScript
+
+## 🛠️ Tech Stack
+
+- **Next.js** – React framework for SSR and fast routing
+- **TypeScript** – Type-safe development
+- **Tailwind CSS** – Utility-first CSS for clean styling
+- **Air Datepicker** – Lightweight, customizable date picker
+- **Axios** – For fetching weather data from API
 
 ## Getting Started
 
