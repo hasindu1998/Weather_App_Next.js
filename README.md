@@ -26,8 +26,8 @@ A dynamic 14-day weather forecast web application built with **Next.js**, **Type
 ### 1. Clone the repository
 
 \`\`\`bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+https://github.com/hasindu1998/Weather_App_Next.js.git
+cd weather-app
 \`\`\`
 
 
