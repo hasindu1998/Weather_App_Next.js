@@ -19,7 +19,7 @@ const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [selectedDay, setSelectedDay] = useState<WeatherDay | null>(null);
 
-  
+  // Handle search function
   const handleSearch = useCallback(async () => {
   if (!destination) return;
   setLoading(true);
@@ -69,6 +69,11 @@ const WeatherApp = () => {
             </div>
           </div>
         </div>
+
+        {/* Loading Spinner */}
+        {loading && (
+          <Spinner />
+        )}
 
         {/* Main Content */}
         {weatherData.length > 0 && (
@@ -141,10 +146,7 @@ const WeatherApp = () => {
           </div>
         )}
 
-        {/* Loading Spinner */}
-        {loading && (
-          <Spinner />
-        )}
+        
       </div>
     </div>
   );

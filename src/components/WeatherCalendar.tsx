@@ -7,7 +7,7 @@ import enLocale from "air-datepicker/locale/en";
 
 interface WeatherDay {
   date: string;
-  icon: string; // this comes directly from the API
+  icon: string;
   avg_temp: number;
   text: string;
 }
@@ -17,6 +17,7 @@ interface Props {
   onDateSelect: (day: WeatherDay | null) => void;
 }
 
+// WeatherCalendar component to display a calendar with weather data
 const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
   const datepickerRef = useRef<HTMLInputElement>(null);
   const pickerInstance = useRef<AirDatepicker<HTMLInputElement> | null>(null);
@@ -47,6 +48,7 @@ const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
         }
       },
 
+      // Add weather icons and data to each cell
       onRenderCell({ date, cellType }) {
         if (cellType === "day") {
           const dateString = date.toISOString().split("T")[0];
@@ -76,6 +78,7 @@ const WeatherCalendar: React.FC<Props> = ({ weatherData, onDateSelect }) => {
     // Optional: auto-select the first day
     pickerInstance.current.selectDate(new Date(first14Days[0].date));
 
+    // Cleanup function to destroy the datepicker
     return () => {
       pickerInstance.current?.destroy();
       pickerInstance.current = null;

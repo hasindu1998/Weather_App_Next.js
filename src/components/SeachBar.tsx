@@ -7,6 +7,7 @@ interface Props {
   loading: boolean;
 }
 
+// List of destinations for the dropdown
 const DESTINATIONS = ["Colombo", "London", "Tokyo", "Paris", "Singapore", "Dubai"];
 
 const SearchBar: React.FC<Props> = ({ destination, setDestination, onSearch, loading }) => {
